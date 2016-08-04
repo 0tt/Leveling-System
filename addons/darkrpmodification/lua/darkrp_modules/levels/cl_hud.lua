@@ -1,5 +1,19 @@
 // Love Manolis Vrondakis. @vrondakis
 
+local translate = {
+	[1] = "Freshman",
+	[2] = "Sophomore",
+	[3] = "Junior",
+	[4] = "Senior",
+	[5] = "Add more",
+	[6] = "Don't forget the comma",
+}
+setmetatable(translate, {
+	__index = function(t, k)
+		return k --Just return the number if we can't find a name for it
+	end,
+})
+
 surface.CreateFont( "HeadBar", { // XP Bar font
 	 font = "Tahoma",
 	 size = 13,
@@ -41,8 +55,8 @@ local shouldDraw, players = hook.Call("HUDShouldDraw", GAMEMODE, "DarkRP_EntityD
 					pos.z = pos.z + 10 -- The position we want is a bit above the position of the eyes
 					pos = pos:ToScreen()
 					pos.y = pos.y-20
-					draw.DrawText('Level: '..(ply:getDarkRPVar('level') or 0), "DarkRPHUD2", pos.x+1, pos.y -56, Color(0,0,0,255), 1)
-					draw.DrawText('Level: '..(ply:getDarkRPVar('level') or 0), "DarkRPHUD2", pos.x, pos.y -55, Color(255,255,255,200), 1)
+					draw.DrawText(translate[ply:getDarkRPVar('level') or 0], "DarkRPHUD2", pos.x+1, pos.y -56, Color(0,0,0,255), 1)
+					draw.DrawText(translate[ply:getDarkRPVar('level') or 0], "DarkRPHUD2", pos.x, pos.y -55, Color(255,255,255,200), 1)
 			elseif not GAMEMODE.Config.globalshow and hisPos:Distance(shootPos) < 250 then
 				local pos = hisPos - shootPos
 				local unitPos = pos:GetNormalized()
@@ -53,8 +67,8 @@ local shouldDraw, players = hook.Call("HUDShouldDraw", GAMEMODE, "DarkRP_EntityD
 						pos.z = pos.z + 10 -- The position we want is a bit above the position of the eyes
 						pos = pos:ToScreen()
 						pos.y = pos.y-20
-						draw.DrawText('Level: '..(ply:getDarkRPVar('level') or 0), "DarkRPHUD2", pos.x, pos.y -58, Color(0,0,0,255), 1)
-						draw.DrawText('Level: '..(ply:getDarkRPVar('level') or 0), "DarkRPHUD2", pos.x+1, pos.y -57, Color(255,255,255,200), 1)
+						draw.DrawText(translate[ply:getDarkRPVar('level') or 0], "DarkRPHUD2", pos.x, pos.y -58, Color(0,0,0,255), 1)
+						draw.DrawText(translate[ply:getDarkRPVar('level') or 0], "DarkRPHUD2", pos.x+1, pos.y -57, Color(255,255,255,200), 1)
 			end
 		end
 	end
@@ -93,8 +107,8 @@ local function HUDPaint()
 
 	// Render the text
 	draw.DrawText(percent2 ..'%', "HeadBar", ScrW()/2,7,(LevelSystemConfiguration.XPTextColor or Color(255,255,255,255)), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-	draw.SimpleText('Level: ' ..(LocalPlayer():getDarkRPVar('level') or 0), "LevelPrompt", LevelSystemConfiguration.LevelTextPos[1],ScrH()-LevelSystemConfiguration.LevelTextPos[2],((Color(0,0,0,255))), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-	draw.SimpleText('Level: ' ..(LocalPlayer():getDarkRPVar('level') or 0), "LevelPrompt", LevelSystemConfiguration.LevelTextPos[1]+1,ScrH()-LevelSystemConfiguration.LevelTextPos[2]-1,(LevelSystemConfiguration.LevelColor or (Color(0,0,0,255))), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+	draw.SimpleText(translate[LocalPlayer():getDarkRPVar('level') or 0], "LevelPrompt", LevelSystemConfiguration.LevelTextPos[1],ScrH()-LevelSystemConfiguration.LevelTextPos[2],((Color(0,0,0,255))), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+	draw.SimpleText(translate[LocalPlayer():getDarkRPVar('level') or 0], "LevelPrompt", LevelSystemConfiguration.LevelTextPos[1]+1,ScrH()-LevelSystemConfiguration.LevelTextPos[2]-1,(LevelSystemConfiguration.LevelColor or (Color(0,0,0,255))), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 
 	DrawDisplay()
 end
